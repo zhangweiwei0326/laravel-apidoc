@@ -17,7 +17,7 @@ composer require weiwei/laravel-apidoc
          * Package Service Providers...
          */
          .......
-        Weiwei\LaravelApiDoc\ApiDocServiceProvider::class
+        Weiwei\LaravelApiDoc\ApiDocServiceProvider::class,
     ]
 ```
 #### 3、发布前端资源文件
