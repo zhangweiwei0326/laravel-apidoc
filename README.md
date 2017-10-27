@@ -1,14 +1,14 @@
 #api-doc
 
 ### 使用方法
-####1、安装扩展
-```
+#### 1、安装扩展
+```bash
 composer require weiwei/laravel-apidoc
 ```
 
-####2、注册服务提供者
+#### 2、注册服务提供者
 
-```
+```php
     添加 ApiDocServiceProvider到config/app.php 的providers 中
 
     如：
@@ -20,13 +20,13 @@ composer require weiwei/laravel-apidoc
         Weiwei\LaravelApiDoc\ApiDocServiceProvider::class
     ]
 ```
-####3、发布前端资源文件
-```
+#### 3、发布前端资源文件
+```bash
     php artisan vendor:publish
 ```
-####4、在相关接口类中增加注释参数
+#### 4、在相关接口类中增加注释参数
 方法如下：返回参数支持数组及多维数组
-```
+```php
 <?php
 
 namespace App\Http\Controllers\Api;
@@ -72,12 +72,12 @@ class DemoController extends Controller
     }
 }
 ```
-####4、在浏览器访问http://你的域名/doc 查看接口文档
+#### 5、在浏览器访问http://你的域名/doc 查看接口文档
 
-####5、预览
+#### 6、预览
 ![](https://static.oschina.net/uploads/img/201704/17101409_tAgD.png)
 ![](https://static.oschina.net/uploads/img/201704/17101348_XuUz.png)
 ![](https://static.oschina.net/uploads/img/201704/17101306_KePe.png)
 
-###更多支持
+### 更多支持
 - QQ群663447446
