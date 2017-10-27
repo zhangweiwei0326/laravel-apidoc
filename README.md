@@ -9,7 +9,7 @@ composer require weiwei/laravel-apidoc
 #### 2、注册服务提供者
 
 ```php
-    添加 ApiDocServiceProvider到config/app.php 的providers 中
+    添加 Weiwei\LaravelApiDoc\ApiDocServiceProvider到config/app.php 的providers 中
 
     如：
     'providers' => [
