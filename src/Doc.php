@@ -73,16 +73,16 @@ class Doc
         {
             if(class_exists($class))
             {
-                $moudel= [];
+                $module = [];
                 $reflection = new \ReflectionClass($class);
                 $doc_str = $reflection->getDocComment();
                 $doc = new DocParser();
                 $class_doc = $doc->parse($doc_str);
-                $moudel =  $class_doc;
-                $moudel['class'] = $class;
+                $module =  $class_doc;
+                $module['class'] = $class;
                 $method = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
                 $filter_method = array_merge(['__construct'], $this->config['filter_method']);
-                $moudel['actions'] = [];
+                $module['actions'] = [];
                 foreach ($method as $action){
                     if(!in_array($action->name, $filter_method))
                     {
@@ -93,12 +93,30 @@ class Doc
                             $action_doc = $doc->parse($doc_str);
                             $action_doc['name'] = $class."::".$action->name;
                             if(array_key_exists('title', $action_doc)){
-                                array_push($moudel['actions'], $action_doc);
+                                if(array_key_exists('module', $action_doc)){
+                                    $key = array_search($action_doc['module'], array_column($list, 'title'));
+                                    if($key === false){
+                                        $folder = [
+                                            'title' => $action_doc['module'],
+                                            'description' => '',
+                                            'class' => $module['class'],
+                                            'actions' => [],
+                                        ];
+                                        array_push($folder['actions'], $action_doc);
+                                        array_push($list, $folder);
+                                    }else{
+                                        array_push($list[$key]['actions'], $action_doc);
+                                    }
+                                }else{
+                                    array_push($module['actions'], $action_doc);
+                                }
                             }
                         }
                     }
                 }
-                array_push($list, $moudel);
+                if(!empty($module['actions'])){
+                    array_push($list, $module);
+                }
             }
         }
         return $list;
@@ -123,9 +141,8 @@ class Doc
             if($reflection->hasMethod($action)) {
                 $method = $reflection->getMethod($action);
                 $doc = new DocParser();
-                $action_doc = $doc->parse($method->getDocComment());
-                $action_doc['header'] = isset($action_doc['header']) ? array_merge($class_doc['header'], $action_doc['header']) : [];
-                $action_doc['param'] = isset($action_doc['param']) ? array_merge($class_doc['param'], $action_doc['param']) : [];
+                $action_doc['header'] = isset($action_doc['header']) ? array_merge($class_doc['header'], $action_doc['header']) : $class_doc['header'];
+                $action_doc['param'] = isset($action_doc['param']) ? array_merge($class_doc['param'], $action_doc['param']) : $class_doc['param'];
             }
         }
         return $action_doc;
@@ -140,21 +157,25 @@ class Doc
     {
         $json = '{<br>';
         $data = $this->config['return_format'];
-        foreach ($data as $name=>$value) {
-            $json .= '&nbsp;&nbsp;"'.$name.'":'.$value.',<br>';
-        }
-        $json .= '&nbsp;&nbsp;"data":{<br/>';
         $returns = isset($doc['return']) ? $doc['return'] : [];
-        foreach ($returns as $val)
-        {
-            list($name, $value) =  explode(":", trim($val));
-            if(strpos($value, '@') != false){
-                $json .= $this->string2jsonArray($doc, $val, '&nbsp;&nbsp;&nbsp;&nbsp;');
-            }else{
-                $json .= '&nbsp;&nbsp;&nbsp;&nbsp;' . $this->string2json(trim($name), $value);
+        foreach ($data as $name=>$value) {
+            if($name != 'data' || (empty($returns) && $name == 'data')){
+                $json .= '&nbsp;&nbsp;"'.$name.'":'.$value.',<br>';
             }
         }
-        $json .= '&nbsp;&nbsp;}<br/>';
+        if( !empty($returns) ) {
+            $json .= '&nbsp;&nbsp;"data":{<br/>';
+            foreach ($returns as $val)
+            {
+                list($name, $value) =  explode(":", trim($val));
+                if(strpos($value, '@') != false){
+                    $json .= $this->string2jsonArray($doc, $val, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                }else{
+                    $json .= '&nbsp;&nbsp;&nbsp;&nbsp;' . $this->string2json(trim($name), $value);
+                }
+            }
+            $json .= '&nbsp;&nbsp;}<br/>';
+        }
         $json .= '}';
         return $json;
     }

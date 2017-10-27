@@ -21,7 +21,7 @@
         <div class="tab-content">
             <!--info-->
             <div class="tab-pane fade in active" id="info">
-                @if(isset($doc['header']) && is_array($doc['header']))
+                @if(isset($doc['header']) && is_array($doc['header']) && !empty($doc['header']))
             <h3>请求Headers</h3>
                 <table class="table table-striped" >
                     <tr><th>名称</th><th>是否必须</th><th>默认值</th><th>说明</th></tr>
@@ -37,7 +37,7 @@
                 <br>
                @endif
 
-            @if(isset($doc['param']) && is_array($doc['param']))
+            @if(isset($doc['param']) && is_array($doc['param']) && !empty($doc['param']))
              <h3>接口参数</h3>
                 <table class="table table-striped" >
                     <tr><th>参数名字</th><th>类型</th><th>是否必须</th><th>默认值</th><th>其他</th><th>说明</th></tr>
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="col-sm-4"><button type="button" id="send" class="btn btn-success" data-loading-text="Loading..." autocomplete="off">发送测试</button></div>
                             </div>
-                            @if(isset($doc['header']) && is_array($doc['header']))
+                            @if(isset($doc['header']) && is_array($doc['header']) && !empty($doc['header']))
                         @foreach($doc['header'] as $header)
                         <div class="form-group">
                                 <label class="col-sm-2 control-label"><span class="badge">header</span> {{ $header['name'] or '' }}</label>
@@ -119,7 +119,7 @@
                                         <span class="glyphicon glyphicon-plus"></span> 增加参数</button>
                                 </div>
                             </div>
-                            @if(isset($doc['param']) && is_array($doc['param']))
+                            @if(isset($doc['param']) && is_array($doc['param']) && !empty($doc['param']))
                       @foreach($doc['param'] as $param)
                         <div class="form-group">
                                 <label class="col-sm-2 control-label">{{ $param['name'] or '' }}</label>
