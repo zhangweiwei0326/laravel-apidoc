@@ -66,6 +66,7 @@ use Illuminate\Http\Request;
 /**
  * @title 测试demo
  * @description 接口说明
+ * @group 接口分组
  * @header name:key require:1 default: desc:秘钥(区别设置)
  * @param name:public type:int require:1 default:1 other: desc:公共参数(区别设置)
  */
