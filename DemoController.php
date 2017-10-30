@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 /**
  * @title 测试demo
+ * @group 移动端接口
  * @description 接口说明
  * @header name:key require:1 default: desc:秘钥(区别设置)
  * @param name:public type:int require:1 default:1 other: desc:公共参数(区别设置)
