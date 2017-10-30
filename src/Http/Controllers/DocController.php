@@ -65,13 +65,13 @@ class DocController extends Controller
     {
         foreach ($actions as $key=>$moudel){
             if(isset($moudel['actions'])){
-                $actions[$key]['iconClose'] = $this->root."/doc/assets/js/zTree_v3/img/zt-folder.png";
-                $actions[$key]['iconOpen'] = $this->root."/doc/assets/js/zTree_v3/img/zt-folder-o.png";
+                $actions[$key]['iconClose'] = $this->request->root()."/apidoc/js/zTree_v3/img/zt-folder.png";
+                $actions[$key]['iconOpen'] = $this->request->root()."/apidoc/js/zTree_v3/img/zt-folder-o.png";
                 $actions[$key]['open'] = true;
                 $actions[$key]['isParent'] = true;
                 $actions[$key]['actions'] = $this->setIcon($moudel['actions'], $num = 1);
             }else{
-                $actions[$key]['icon'] = $this->root."/doc/assets/js/zTree_v3/img/zt-file.png";
+                $actions[$key]['icon'] = $this->request->root()."/apidoc/js/zTree_v3/img/zt-file.png";
                 $actions[$key]['isParent'] = false;
                 $actions[$key]['isText'] = true;
             }
