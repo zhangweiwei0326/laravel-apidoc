@@ -21,8 +21,12 @@
             </div>
         </div>
         <div class="zt_content" style="overflow: hidden;">
-            <ul id="apiTab" class="nav nav-tabs"></ul>
-            <div class="tab-content"></div>
+            <ul id="apiTab" class="nav nav-tabs">
+                <li id="index_tab" class="active"><a href="#index_tab_content" data-toggle="tab">搜索</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="index_tab_content"><iframe id="zt_text" src="{{ Request::root() }}/doc/search" width="100%" height="100%" frameborder="0"></iframe></div>
+            </div>
         </div>
     </div>
 @stop
@@ -104,10 +108,10 @@
             success: function(data){
                 var zNodes = data.list;
                 zTree = $.fn.zTree.init($("#zt_navi_tree"), setting, zNodes);
-                if(data.firstId) {
-                    var currentId = data.firstId;
+                var currentId = data.firstId || '{{ str_replace('\\', '\\\\', $doc) }}';
+                if(currentId) {
                     var node = zTree.getNodeByParam("name", currentId);
-                    loadText(node.tId, node.title, currentId);
+                    loadText(node.tId, node.title, node.name);
                     zTree.selectNode(node);
                 }
             }

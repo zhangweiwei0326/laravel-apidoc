@@ -52,10 +52,27 @@ class DocController extends Controller
      */
     public function index()
     {
-        return view('apidoc::index');
+        return view('apidoc::index', ['doc' => $this->request->input('name')]);
     }
 
-
+    /**
+     * 文档搜素
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search()
+    {
+        if($this->request->ajax())
+        {
+            $data = $this->doc->searchList($this->request->input('query'));
+            return response($data, 200);
+        }
+        else
+        {
+            $module = $this->doc->getModuleList();
+            return view('apidoc::search', ['module' => $module]);
+        }
+    }
+    
     /**
      * 设置目录树及图标
      * @param $actions
