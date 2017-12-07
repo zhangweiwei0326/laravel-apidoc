@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">接口地址</label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" type="text" name="url" value='<?php echo isset($doc["url"]) ? url($doc["url"],"","") : "请设置url注释"; ?>'>
+                                    <input class="form-control" type="text" name="url" value='<?php echo isset($doc["url"]) ? Request::root().$doc["url"] : "请设置url注释"; ?>'>
                                 </div>
                                 <div class="col-sm-4"><button type="button" id="send" class="btn btn-success" data-loading-text="Loading..." autocomplete="off">发送测试</button></div>
                             </div>
