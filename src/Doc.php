@@ -164,7 +164,7 @@ class Doc
                         array_push($list[$key]['children'], $class_doc);
                     }
                 }else{
-                    array_push($list, $class_doc['title']);
+                    array_push($list, $class_doc);
                 }
             }
         }
