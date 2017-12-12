@@ -224,8 +224,10 @@ class Doc
                         {
                             $action_doc = $doc->parse($doc_str);
                             $action_doc['name'] = $class."::".$action->name;
-                            if(isset($action_doc['title']) && (strpos($action_doc['title'], $keyword) !== false || strpos($action_doc['description'], $keyword) !== false
-                            || strpos($action_doc['author'], $keyword) !== false || strpos($action_doc['url'], $keyword) !== false))
+                            if((isset($action_doc['title']) && strpos($action_doc['title'], $keyword) !== false)
+                                    || (isset($action_doc['description']) && strpos($action_doc['description'], $keyword) !== false)
+                                    || (isset($action_doc['author']) && strpos($action_doc['author'], $keyword) !== false)
+                                    || (isset($action_doc['url'])  && strpos($action_doc['url'], $keyword) !== false))
                             {
                                 array_push($list, $action_doc);
                             }
