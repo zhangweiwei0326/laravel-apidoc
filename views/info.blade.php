@@ -8,11 +8,11 @@
 <div class="container">
     <div class="jumbotron">
         <p class="bg-success" style="font-size: 18px;">文档地址：{{ Request::root() }}/doc?name={{ $doc['name'] }}</p>
-        <h2>接口：{{ $doc['title'] or '请设置title注释' }}</h2>
-        <p>接口地址：{{ $doc['url'] or '请设置url注释' }} <span class="label label-success">{{ $doc['method'] or 'GET' }}</span></p>
-        <p class="text-primary">{{ $doc['title'] or '请设置title注释' }} -- {{ $doc['author'] or '请设置auhtor注释' }}</p>
+        <h2>接口：{{ isset($doc['title']) ? $doc['title'] : '请设置title注释' }}</h2>
+        <p>接口地址：{{ isset($doc['url']) ? $doc['url'] : '请设置url注释' }} <span class="label label-success">{{ isset($doc['method']) ? $doc['method'] : 'GET' }}</span></p>
+        <p class="text-primary">{{ isset($doc['title']) ? $doc['title'] : '请设置title注释' }} -- {{ isset($doc['author']) ? $doc['author'] : '请设置auhtor注释' }}</p>
         <br/>
-        <p><strong>{{ $doc['description'] or '' }}</strong></p><br/>
+        <p><strong>{{ isset($doc['description']) ? $doc['description'] : '' }}</strong></p><br/>
 
         <ul id="myTab" class="nav nav-tabs">
             <li class="active"><a href="#info" data-toggle="tab">接口信息</a></li>
@@ -27,10 +27,10 @@
                     <tr><th>名称</th><th>是否必须</th><th>默认值</th><th>说明</th></tr>
                     @foreach($doc['header'] as $header)
                 <tr>
-                        <td>{{ $header['name'] or "-" }}</td>
+                        <td>{{ isset($header['name']) ? $header['name'] : "-" }}</td>
                         <td>@if($header['require']) 必填 @else 非必填  @endif</td>
-                        <td>{{ $header['default'] or "-" }}</td>
-                        <td>{{ $header['desc'] or "-" }}</td>
+                        <td>{{ isset($header['default']) ? $header['default'] : "-" }}</td>
+                        <td>{{ isset($header['desc']) ? $header['desc'] : "-" }}</td>
                     </tr>
                     @endforeach
             </table>
@@ -43,12 +43,12 @@
                     <tr><th>参数名字</th><th>类型</th><th>是否必须</th><th>默认值</th><th>其他</th><th>说明</th></tr>
                     @foreach($doc['param'] as $param)
                 <tr>
-                        <td>{{ $param['name'] or "-" }}</td>
-                        <td>{{ $param['type'] or "-" }}</td>
+                        <td>{{ isset($param['name']) ? $param['name'] : "-" }}</td>
+                        <td>{{ isset($param['type']) ? $param['type'] : "-" }}</td>
                         <td>@if($param['require']) 必填 @else 非必填  @endif</td>
-                        <td>{{ $param['default'] or "-" }}</td>
-                        <td>{{ $param['other'] or "-" }}</td>
-                        <td>{{ $param['desc'] or "-" }}</td>
+                        <td>{{ isset($param['default']) ? $param['default'] : "-" }}</td>
+                        <td>{{ isset($param['other']) ? $param['other'] : "-" }}</td>
+                        <td>{{ isset($param['desc']) ? $param['desc'] : "-" }}</td>
                     </tr>
                     @endforeach
             </table>
@@ -57,7 +57,7 @@
              @if(isset($doc['remark']))
             <h3>备注说明</h3>
                 <div role="alert" class="alert alert-info">
-                    {{$doc['remark'] or '无'}}
+                    {!! isset($doc['remark']) ? $doc['remark'] : '无' !!}
              </div>
                 <br>
                 @endif
@@ -85,7 +85,7 @@
                             @if(isset($doc['header']) && is_array($doc['header']) && !empty($doc['header']))
                         @foreach($doc['header'] as $header)
                         <div class="form-group">
-                                <label class="col-sm-2 control-label"><span class="badge">header</span> {{ $header['name'] or '' }}</label>
+                                <label class="col-sm-2 control-label"><span class="badge">header</span> {{ isset($header['name']) ? $header['name'] : '' }}</label>
                                 <div class="col-sm-6">
                                     <input class="form-control" type="text" name="header[{{ $header['name'] }}]" value="">
                                 </div>
@@ -122,9 +122,9 @@
                             @if(isset($doc['param']) && is_array($doc['param']) && !empty($doc['param']))
                       @foreach($doc['param'] as $param)
                         <div class="form-group">
-                                <label class="col-sm-2 control-label">{{ $param['name'] or '' }}</label>
+                                <label class="col-sm-2 control-label">{{ isset($param['name']) ? $param['name'] : '' }}</label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" type="text" name="{{ $param['name'] or '' }}" value="">
+                                    <input class="form-control" type="text" name="{{ isset($param['name']) ? $param['name'] : '' }}" value="">
                                 </div>
                                 <div class="col-sm-4"><label class="control-label text-warning"></label></div>
                             </div>

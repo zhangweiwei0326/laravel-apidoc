@@ -23,16 +23,16 @@
                 @if(isset($group['children']))
                     <li role="presentation" class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{ $group['title'] or '' }} <span class="caret"></span>
+                            {{ isset($group['title']) ? $group['title'] : '' }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             @foreach($group['children'] as $val)
-                            <li role="presentation"><a href="#" module>{{ $val['title'] or '' }}</a></li>
+                            <li role="presentation"><a href="#" module>{{ isset($val['title']) ? $val['title'] : '' }}</a></li>
                             @endforeach
                     </ul>
                     </li>
                 @else
-                <li role="presentation"><a href="#" module>{{ $group['title'] or '' }}</a></li>
+                <li role="presentation"><a href="#" module>{{ isset($group['title']) ? $group['title'] : '' }}</a></li>
                 @endif
             @endforeach
         </ul>
