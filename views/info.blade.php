@@ -61,6 +61,14 @@
              </div>
                 <br>
                 @endif
+          <div class="panel panel-primary" style="border-color: #00A881;">
+                <div class="panel-heading" style="border-color: #00A881;background-color: #00A881">
+                    <h3 class="panel-title">CURL代码(可快捷导入postman等工具)</h3>
+                </div>
+                <div class="panel-body">
+                    <code>{{ $curl_code }}</code>
+                </div>
+            </div>
             <h3>返回结果</h3>
                 <p><code id="json_text">{!! $return !!}</code></p>
             </div>
@@ -181,7 +189,7 @@
         </div>
     </div>
 
-    <p>&copy; {$copyright} <p>
+    <p>&copy; {{ $copyright }} <p>
 </div>
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="addParamModal" tabindex="-1" role="dialog"

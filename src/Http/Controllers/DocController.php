@@ -119,7 +119,17 @@ class DocController extends Controller
             $return = $this->doc->formatReturn($action_doc);
             $action_doc['header'] = isset($action_doc['header']) ? array_merge($this->doc->__get('public_header'), $action_doc['header']) : [];
             $action_doc['param'] = isset($action_doc['param']) ? array_merge($this->doc->__get('public_param'), $action_doc['param']) : [];
-            return view('apidoc::info', ['doc'=>$action_doc, 'return'=>$return]);
+            //curl code
+            $curl_code = 'curl --location --request '.($action_doc['method'] ?? 'GET');
+            $params = [];
+            foreach ($action_doc['param'] as $param){
+                $params[$param['name']] = $param['default'] ?? '';
+            }
+            $curl_code .= ' \''.\Request::root().($action_doc["url"] ?? '').(count($params) > 0 ? '?'.http_build_query($params) : '').'\' ';
+            foreach ($action_doc['header'] as $header){
+                $curl_code .= '--header \''.$header['name'].':\'';
+            }
+            return view('apidoc::info', ['doc'=>$action_doc, 'return'=>$return, 'curl_code' => $curl_code]);
         }
     }
 
