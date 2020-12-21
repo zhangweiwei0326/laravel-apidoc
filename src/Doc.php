@@ -125,10 +125,32 @@ class Doc
                         array_push($floder['actions'], $module);
                         array_push($list, $floder);
                     }else{
-                        array_push($list[$key]['actions'], $module);
+                        if (isset($list[$key]['actions'])) {
+                            array_push($list[$key]['actions'], $module);
+                        } else {
+                            $list[$key]['actions'] = $module;
+                        }
                     }
                 }else{
-                    array_push($list, $module);
+                    $key = array_search($module['title'] ?? 'null', array_column($list, 'title'));
+                    if($key === false){ //创建分组
+                        $floder = [
+                            'title' => $module['title'] ?? null,
+                            'description' => '',
+                            'package' => '',
+                            'class' => '',
+                            'actions' => []
+                        ];
+                        array_push($floder['actions'], $module);
+                        array_push($list, $floder);
+                    }else{
+                        if (isset($list[$key]['actions'])) {
+                            array_push($list[$key]['actions'], $module);
+                        } else {
+                            $list[$key]['actions'] = $module;
+                        }
+                    }
+//                    array_push($list, $module);
                 }
             }
         }
@@ -161,7 +183,11 @@ class Doc
                     }
                     else
                     {
-                        array_push($list[$key]['children'], $class_doc);
+                        if (isset($list[$key]['children'])) {
+                            array_push($list[$key]['children'], $class_doc);
+                        } else {
+                            $list[$key]['children'] = $class_doc;
+                        }
                     }
                 }else{
                     array_push($list, $class_doc);
